@@ -1,1 +1,1 @@
-# fashion-revolution-django
+# fashion-revolution
