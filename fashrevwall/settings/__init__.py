@@ -64,7 +64,7 @@ USE_TZ = True  # Stores dates with timezone
 
 STATIC_URL = '/staticfiles/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, "collected_static")
+STATIC_ROOT = ''
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
