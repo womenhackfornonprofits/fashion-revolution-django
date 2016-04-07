@@ -69,7 +69,7 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "fashrevwall/static"),
+    os.path.join(STATIC_DIR, "fashrevwall/static"),
 ]
 
 CONTEXT_PROCESSORS = [
