@@ -1,7 +1,6 @@
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-STATIC_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Application definition
 
@@ -65,14 +64,11 @@ USE_TZ = True  # Stores dates with timezone
 
 STATIC_URL = '/staticfiles/'
 
-STATIC_ROOT = os.path.join(os.path.dirname(STATIC_DIR), "collected_static")
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "collected_static")
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "fashrevwall", "static"),)
 
-
-STATICFILES_DIRS = [
-    os.path.join(STATIC_DIR, "static"),
-]
 
 CONTEXT_PROCESSORS = [
     "django.contrib.auth.context_processors.auth",
