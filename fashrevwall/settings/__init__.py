@@ -58,7 +58,7 @@ USE_TZ = True  # Stores dates with timezone
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
-STATIC_ROOT = BASE_DIR
+STATIC_ROOT = 'staticfiles'
 
 STATIC_URL = '/static/'
 
