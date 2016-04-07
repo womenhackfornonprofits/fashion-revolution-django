@@ -1,7 +1,6 @@
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-STATIC_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Application definition
 
@@ -70,7 +69,7 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
 STATICFILES_DIRS = [
-    os.path.join(STATIC_DIR, "static"),
+    os.path.join(BASE_DIR, "fashrevwall/static"),
 ]
 
 CONTEXT_PROCESSORS = [
