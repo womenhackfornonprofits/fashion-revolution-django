@@ -1,4 +1,5 @@
 import os
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
 
@@ -60,9 +61,12 @@ USE_TZ = True  # Stores dates with timezone
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = 'staticfiles' 
+#STATIC_ROOT = 'static' 
 
-
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    'static/',
+]
 
 CONTEXT_PROCESSORS = [
     "django.contrib.auth.context_processors.auth",
