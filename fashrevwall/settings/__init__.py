@@ -1,7 +1,7 @@
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-
+STATIC_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Application definition
 
@@ -61,7 +61,7 @@ USE_TZ = True  # Stores dates with timezone
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 #
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(STATIC_DIR, 'staticfiles')
 
 STATIC_URL = '/staticfiles/'
 
