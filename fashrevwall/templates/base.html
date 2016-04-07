@@ -1,4 +1,4 @@
-{% load static from staticfiles %}
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en-gb">
@@ -19,6 +19,8 @@
     <!--Twitter-->
     
     <!-- Latest compiled and minified CSS -->   
+    <link href="{% static "styles/screen.css" %}" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static "img/favicon.png" %}" type="image/x-icon">
 
     <!--[if IE]><script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 </head>
@@ -27,7 +29,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xs-12 col-md-3" id="logo-wrapper">
-
+                    <img src="{% static "img/FRD_logo.jpg" %}" id="logo"/>
                 </div>
             </div>
         </div>
