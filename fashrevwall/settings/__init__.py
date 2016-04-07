@@ -61,9 +61,11 @@ USE_TZ = True  # Stores dates with timezone
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 #
-STATIC_ROOT = os.path.join(STATIC_DIR, 'staticfiles')
+#STATIC_ROOT = os.path.join(STATIC_DIR, 'staticfiles')
 
 STATIC_URL = '/staticfiles/'
+
+STATIC_ROOT = os.path.join(os.path.dirname(STATIC_DIR), "collected_static")
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
