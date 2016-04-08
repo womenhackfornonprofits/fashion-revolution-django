@@ -11,7 +11,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'fashrevwall',
+    'fashrevwall.wall',
 )
 
 MIDDLEWARE_CLASSES = (
