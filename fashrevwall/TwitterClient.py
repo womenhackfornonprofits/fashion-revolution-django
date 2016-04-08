@@ -5,7 +5,7 @@ search criteria using Twitter REST API and Tweepy.
 import json
 import tweepy
 from tweepy import OAuthHandler
-from TwitterStreamListener import TwitterStreamListener
+from .TwitterStreamListener import TwitterStreamListener
 
 class TwitterClient:
     def __init__(self):
