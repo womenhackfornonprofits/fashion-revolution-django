@@ -8,6 +8,7 @@ import tweepy
 from tweepy import OAuthHandler
 from .TwitterStreamListener import TwitterStreamListener
 from fashrevwall.wall.models import Tweet
+from django.db import IntegrityError
 
 class TwitterClient:
     def __init__(self):
@@ -28,7 +29,7 @@ class TwitterClient:
         return tweepy.API(self.auth)
 
 
-    def get_tweets_by_hashtag(self, hashtag, n):
+    def _get_tweets_by_hashtag(self, hashtag, n):
         """
         Receives a string hashtag and returns the list of last n Tweets
         containing it.
@@ -46,7 +47,7 @@ class TwitterClient:
         containing it.
         """
         images = []
-        tweets = self.get_tweets_by_hashtag(hashtag, n)
+        tweets = self._get_tweets_by_hashtag(hashtag, n)
         for tweet in tweets:
             user = tweet.author.screen_name.encode('utf-8')
             try:
