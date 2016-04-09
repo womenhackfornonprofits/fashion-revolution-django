@@ -7,6 +7,7 @@ import json
 import tweepy
 from tweepy import OAuthHandler
 from .TwitterStreamListener import TwitterStreamListener
+from fashrevwall.wall.models import Tweet
 
 class TwitterClient:
     def __init__(self):
@@ -26,6 +27,7 @@ class TwitterClient:
 
         return tweepy.API(self.auth)
 
+
     def get_tweets_by_hashtag(self, hashtag, n):
         """
         Receives a string hashtag and returns the list of last n Tweets
@@ -37,6 +39,7 @@ class TwitterClient:
             tweets.append(tweet)
         return tweets
 
+
     def get_images_by_hashtag(self, hashtag, n):
         """
         Receives a string hashtag and returns the list of last n Tweets
@@ -45,14 +48,14 @@ class TwitterClient:
         images = []
         tweets = self.get_tweets_by_hashtag(hashtag, n)
         for tweet in tweets:
+            user = tweet.author.screen_name
             try:
                 image_url = tweet.entities['media'][0]['media_url']
             except KeyError:
                 print "No media in tweet with ID: {}".format(tweet.id)
                 continue
-            print image_url
-            images.append(image_url)
-        return images
+            t = Tweet.objects.create(user=user, image_url=image_url)
+
 
     def stream_by_hashtag(self, hashtag):
         streamingAPI = tweepy.streaming.Stream(self.auth, TwitterStreamListener())
