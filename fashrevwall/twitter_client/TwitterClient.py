@@ -48,7 +48,7 @@ class TwitterClient:
         images = []
         tweets = self.get_tweets_by_hashtag(hashtag, n)
         for tweet in tweets:
-            user = tweet.author.screen_name
+            user = tweet.author.screen_name.encode('utf-8')
             try:
                 image_url = tweet.entities['media'][0]['media_url']
             except KeyError:
