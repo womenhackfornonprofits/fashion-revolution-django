@@ -1,5 +1,5 @@
 # fashion-revolution
-Install instructions:
+## Install instructions:
 
 
 1. Get the code: `git clone https://github.com/womenhackfornonprofits/fashion-revolution-django`
@@ -10,3 +10,13 @@ Install instructions:
 2. Go to project folder: `pip install -r requirements.txt`
 3. Create empty db for now locally, `createdb fashrevwall`
 4. Start the server: `python manage.py runserver`
+
+## Deploy to Heroku
+1. Create a [Heroku](https://www.heroku.com/) account and get added to the app
+2. Download [Heroku Toolbeit](https://devcenter.heroku.com/articles/getting-started-with-python#set-up)
+3. Login: `heroku login`
+4. Add a new remote to push to Heroku: `git remote add heroku-remote git@heroku.com:fashion-revolution-wall.git`
+5. You may need to add ssh keys `heroku keys:add` if this is a machine that has not had heroku setup before
+6. When you have changed ready to push, your working directory must be clean then do `git push heroku master`
+7. See the pushed changes: `heroku open`
+8. If any issues, view the logs: `heroku logs`
