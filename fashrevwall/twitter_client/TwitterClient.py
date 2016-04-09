@@ -52,10 +52,16 @@ class TwitterClient:
             try:
                 image_url = tweet.entities['media'][0]['media_url']
             except KeyError:
-                print "No media in tweet with ID: {}".format(tweet.id)
+                # Some tweets with given hashtag might not have images in them
                 continue
-            t = Tweet.objects.create(user=user, image_url=image_url)
-            t.save()
+            try:
+                t = Tweet.objects.create(user=user, image_url=image_url)
+                t.save()
+            except IntegrityError:
+                # We only want images to be in the DB once so that field has
+                # been set to unique. If we try to insert the same image_url
+                # twice, the code breaks with an IntegrityError, so skip those
+                continue
 
 
     def stream_by_hashtag(self, hashtag):
