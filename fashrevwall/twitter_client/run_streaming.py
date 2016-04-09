@@ -1,4 +1,4 @@
-from TwitterClient import TwitterClient
+from .TwitterClient import TwitterClient
 
 def test_twitter_streaming():
     client = TwitterClient()
