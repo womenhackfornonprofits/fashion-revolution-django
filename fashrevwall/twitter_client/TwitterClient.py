@@ -55,6 +55,7 @@ class TwitterClient:
                 print "No media in tweet with ID: {}".format(tweet.id)
                 continue
             t = Tweet.objects.create(user=user, image_url=image_url)
+            t.save()
 
 
     def stream_by_hashtag(self, hashtag):
