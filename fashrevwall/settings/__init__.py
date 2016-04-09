@@ -12,6 +12,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'fashrevwall.wall',
+    'fashrevwall.twiter_client',
 )
 
 MIDDLEWARE_CLASSES = (
