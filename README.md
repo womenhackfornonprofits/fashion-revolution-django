@@ -1,7 +1,18 @@
-# fashion-revolution
-## Install instructions:
+# Fashion Revolution Wall
 
+## Description
+Live wall/ photo feed of clothing labels for Fashion Revolution Day for [Fashion Revolution](http://fashionrevolution.org/). People will be taking photos of their clothing labels, we would like them to all upload onto a live feed.
 
+##Team
+###Backend
+* Raquel
+* Mariza
+
+###Front-End
+* Lili
+* Karen
+
+##Project Setup
 1. Get the code: `git clone https://github.com/womenhackfornonprofits/fashion-revolution-django`
 2. Get [Virtual Env](https://virtualenv.pypa.io/en/latest/installation.html) 
 2. Get [virtualend wrapper](http://virtualenvwrapper.readthedocs.org/en/latest/install.html)
@@ -10,6 +21,11 @@
 2. Go to project folder: `pip install -r requirements.txt`
 3. Create empty db for now locally, `createdb fashrevwall`
 4. Start the server: `python manage.py runserver`
+
+### Front End Instuctrions
+1. First you will need to install [NPM](https://nodejs.org/) to manage packages 
+2. Install [Grunt](http://gruntjs.com/getting-started)
+3. Go to `static-src` folder and run `npm install` to install all the front end dependencies.
 
 ## Deploy to Heroku
 1. Create a [Heroku](https://www.heroku.com/) account and get added to the app
