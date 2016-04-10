@@ -1,0 +1,88 @@
+/** TO DO: added this to keep a copy of the tweet styling, 
+     needs to be replaced by the correct source less/css 
+     file with bootstrap imports etc **/
+
+body {
+  background: #ef5b58;
+}
+.twitter-image {
+  width: 20em;
+  height: 20em;
+  display:block;
+  background-repeat: no-repeat;
+  background-position: center; 
+  background-size: cover;
+  border: 1em solid #fcfcfc;  
+  border-bottom-width: 0;
+  box-shadow:1px 1px 1px 1px rgba(0,0,0,.1) inset;
+}
+.tweet-container {
+  box-shadow:4px 4px 0px rgba(0,0,0,.1);  
+}
+.tweet-container:hover {
+  opacity:0.8;  
+  transform: scale(1.01);
+  cursor: pointer;
+
+}
+#twitter-images-list {
+  list-style:none;
+  margin:0 auto;
+  display:block;
+  padding: 3em 0;
+  display: flex;
+  max-width: 70em;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#twitter-images-list li {
+  margin: 1.5em 0 0 1.5em;
+  display:inline-block;  
+}
+.tweet-text {
+  background:#fcfcfc;
+  line-height:1.3em;
+  text-align: center;
+  padding: 1em;
+  font-style: bold;
+  padding:0.5em 0;
+  border: .7em solid #fcfcfc;  
+  display:block;
+  font-weight:bold;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  margin: 0 0 1em 0;
+  color:#181818;
+  font-family:"Open Sans", "Ariel";
+}
+
+#top-bar {
+  height: 200px;
+}
+#top-bar #logo-wrapper {
+  background: url('../img/FashRev_pattern.png');
+  height: 200px;
+}
+#top-bar #logo {
+  height: 200px;
+  width: 200px;
+  margin: 0 auto;
+  display: block;
+  position: relative;
+  top: 40px;
+}
+#introduction {
+  background: #ffffff;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+.hashtag {
+  font-weight: bold;
+  font-size: 25px;
+}
+a {
+  font-weight: bold;
+  color: #000000;
+  font-style:italic;
+}
