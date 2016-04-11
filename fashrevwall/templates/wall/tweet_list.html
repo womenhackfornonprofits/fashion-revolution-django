@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %} Homepage {{ block.super }} {% endblock %}
+
+{% block content %}
+
+    <div id="introduction">
+        <div class="container">
+            <h1>Fashion Revolution Wall</h1>
+            <p>
+                This is the Fashion Revolution Wall, a collection of your clothing labels to mark Fashion Revolution 2016 and ask 'Who made my clothes?'. By welcoming anyone from around the world to post a photo of their label on the wall, we hope to hope to raise awareness of the true cost of fashion and show that together we can create a more sustainable future for our fashion industry.
+            </p>
+            <p>
+                To submit your own clothing label to the Fashion Revolution Wall, just take a photo of your label and tweet it using the hashtags:
+            </p>
+            <p>
+                <span class="hashtag">#fashrevwall</span> and <span class="hashtag">#whomademyclothes</span>
+            </p>
+            <p>
+                Scroll down to view the wall as it grows, or find out more <a href="/about">about Fashion Revolution Wall.</a>
+            </p>
+        </div>
+    </div>  
+    <div id="wall">
+        <div class="tweet-list-container">
+            <ul id="twitter-images-list">
+              {% for tweet in object_list %}
+                <li>
+                  <div class="tweet-container">
+                    <div class="twitter-image" style="background-image: url({{ tweet.image_url }})"></div> 
+                    <span class="tweet-text">&#64;{{ tweet.user }}</span>
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}
