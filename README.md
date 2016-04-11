@@ -19,7 +19,7 @@ Live wall/ photo feed of clothing labels for Fashion Revolution Day for [Fashion
 3. Create a new virtual enviroment for the project `mkvirtualenv fashrevwall`
 4. Use this enviroment or change to this from another by using: `workon fashrevwall`
 2. Go to project folder: `pip install -r requirements.txt`
-3. Get [Postgres]: (http://www.postgresql.org/)
+3. Get [Postgres](http://www.postgresql.org/)
 3. Create empty db for now locally, `createdb fashrevwall`
 4. Start the server: `python manage.py runserver`
 
