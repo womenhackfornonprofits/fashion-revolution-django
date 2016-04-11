@@ -1,2 +1,4 @@
+static-src/.sass-cache/
+static-src/node_modules
 .DS_Store
 **.pyc

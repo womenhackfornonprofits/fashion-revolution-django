@@ -32,39 +32,8 @@
                 </div>
             </div>
         </div>
+        
         {% block content %}
-        <div id="introduction">
-            <div class="container">
-                <h1>Fashion Revolution Wall</h1>
-                <p>
-                    This is the Fashion Revolution Wall, a collection of your clothing labels to mark Fashion Revolution 2016 and ask 'Who made my clothes?'. By welcoming anyone from around the world to post a photo of their label on the wall, we hope to hope to raise awareness of the true cost of fashion and show that together we can create a more sustainable future for our fashion industry.
-                </p>
-                <p>
-                    To submit your own clothing label to the Fashion Revolution Wall, just take a photo of your label and tweet it using the hashtags:
-                </p>
-                <p>
-                    <span class="hashtag">#fashrevwall</span> and <span class="hashtag">#whomademyclothes</span>
-                </p>
-                <p>
-                    Scroll down to view the wall as it grows, or find out more <a href="/about">about Fashion Revolution Wall.</a>
-                </p>
-            </div>
-        </div>  
-        <div id="wall">
-            <div class="container">
-
-                <ul id="twitter-images-list">
-                  {% for tweet in tweets %}
-                    <li>
-                      <div class="color-container">
-                        <img class="color-circle" href="{{tweet.image_url}}"></img>
-                        <span class="color-text">{{ tweet.user }}</span>
-                      </div>
-                    <li>
-                  {% endfor %}
-                </ul>
-            </div>
-        </div>
 
         {% endblock %}
 
@@ -81,7 +50,7 @@
                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-           ga('create', 'UA-*****TODO', 'auto');
+           ga('create', 'UA-76152092-1', 'auto');
            ga('send', 'pageview');
         </script>
     </body>
