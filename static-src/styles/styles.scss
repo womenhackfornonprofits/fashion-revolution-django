@@ -1,13 +1,50 @@
 @import "bootstrap-custom";
 
-$max-width: 63em;
+$max-width: 63em; 
+$max-text-width: 45em;
+$font-size-base: 16px;
+$font-size-text: 1.2em;
+
+@font-face {
+ font-family: "Kelson Sans";
+    src: url("kelson-font/Kelson_Sans_Regular.otf") format("opentype");
+}
+@font-face {
+    font-family: "Kelson Sans";
+    font-weight: bold;
+    src: url("kelson-font/Kelson_Sans_Bold.otf") format("opentype");
+}
 
 body {
     background: #ef5b58;
+    font-family: "Kelson Sans"; 
+    font-size: $font-size-base;
+} 
+h1 {
+    font-family: "Kelson Sans";
+    font-size: 3em;
+    line-height: 1.5em;
+    text-decoration: underline;;
 }
 
+a {
+    padding: 0;
+    margin: 0;
+}
 .container {
-    max-width: $max-width;
+    max-width: $max-text-width;
+    padding: 2em;
+    font-size: $font-size-text;
+    line-height: $font-size-text*1.4;
+}
+
+.color-container {
+    background-color: #ef5b58;
+    padding: 4em 0;
+    p {
+        text-align: center;
+
+    }
 }
 .twitter-image {
     width: 17em;
@@ -47,8 +84,9 @@ body {
 }
 
 #twitter-images-list li {
-    margin: 1.5em 0 0 1.5em;
-    display:inline-block;  
+    margin: 1.5em auto;
+    display:inline-block; 
+
 }
 .tweet-text {
     background:#fcfcfc;
@@ -73,6 +111,7 @@ body {
 #top-bar #logo-wrapper {
     background: url('../img/FashRev_pattern.png');
     height: 200px;
+    padding: 0;
 }
 #top-bar #logo {
     height: 200px;
@@ -82,7 +121,7 @@ body {
     position: relative;
     top: 40px;
 }
-#introduction {
+.white-container {
     background: #ffffff;
     padding-top: 40px;
     padding-bottom: 40px;
