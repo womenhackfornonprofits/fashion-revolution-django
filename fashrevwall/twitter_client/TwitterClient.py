@@ -50,14 +50,16 @@ class TwitterClient:
         tweets = self._get_tweets_by_hashtag(hashtag, n)
         for tweet in tweets:
             user = tweet.author.screen_name.encode('utf-8')
+            created_at = tweet.created_at
             try:
                 image_url = tweet.entities['media'][0]['media_url']
             except KeyError:
                 # Some tweets with given hashtag might not have images in them
                 continue
             try:
-                t = Tweet.objects.create(user=user, image_url=image_url)
+                t = Tweet.objects.create(user=user, image_url=image_url, created_at=created_at)
                 t.save()
+                print t
             except IntegrityError:
                 # We only want images to be in the DB once so that field has
                 # been set to unique. If we try to insert the same image_url
