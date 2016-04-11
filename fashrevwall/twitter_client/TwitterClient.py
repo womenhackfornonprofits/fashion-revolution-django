@@ -3,7 +3,6 @@ Represents a client that connects to Twitter to retrieve tweets based on a
 search criteria using Twitter REST API and Tweepy.
 """
 import os
-import json
 import tweepy
 from tweepy import OAuthHandler
 from .TwitterStreamListener import TwitterStreamListener
@@ -35,10 +34,27 @@ class TwitterClient:
         containing it.
         """
         tweets = []
-        results = tweepy.Cursor(self.api.search, q=hashtag).items(n)
-        for tweet in results:
+        # Work out date of latest tweet in DB, and query since that date only
+        since = self.get_latest_tweet_date()
+        if since:
+            results = tweepy.Cursor(self.api.search, q=hashtag, since=since)
+        else:
+            results = tweepy.Cursor(self.api.search, q=hashtag)
+        for tweet in results.items():
             tweets.append(tweet)
         return tweets
+
+    def get_latest_tweet_date(self):
+        """
+        Gets date of latest tweeted tweet.
+        """
+        try:
+            latest_tweet = Tweet.objects.order_by('created_at').reverse()[0]
+            print latest_tweet.created_at
+        except IndexError:
+            return None
+
+        return latest_tweet.created_at
 
 
     def get_images_by_hashtag(self, hashtag, n):
