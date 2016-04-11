@@ -8,6 +8,7 @@ import tweepy
 from tweepy import OAuthHandler
 from .TwitterStreamListener import TwitterStreamListener
 from fashrevwall.wall.models import Tweet
+from django.db import IntegrityError
 
 class TwitterClient:
     def __init__(self):
@@ -28,7 +29,7 @@ class TwitterClient:
         return tweepy.API(self.auth)
 
 
-    def get_tweets_by_hashtag(self, hashtag, n):
+    def _get_tweets_by_hashtag(self, hashtag, n):
         """
         Receives a string hashtag and returns the list of last n Tweets
         containing it.
@@ -46,16 +47,22 @@ class TwitterClient:
         containing it.
         """
         images = []
-        tweets = self.get_tweets_by_hashtag(hashtag, n)
+        tweets = self._get_tweets_by_hashtag(hashtag, n)
         for tweet in tweets:
             user = tweet.author.screen_name.encode('utf-8')
             try:
                 image_url = tweet.entities['media'][0]['media_url']
             except KeyError:
-                print "No media in tweet with ID: {}".format(tweet.id)
+                # Some tweets with given hashtag might not have images in them
                 continue
-            t = Tweet.objects.create(user=user, image_url=image_url)
-            t.save()
+            try:
+                t = Tweet.objects.create(user=user, image_url=image_url)
+                t.save()
+            except IntegrityError:
+                # We only want images to be in the DB once so that field has
+                # been set to unique. If we try to insert the same image_url
+                # twice, the code breaks with an IntegrityError, so skip those
+                continue
 
 
     def stream_by_hashtag(self, hashtag):
