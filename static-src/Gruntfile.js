@@ -24,13 +24,13 @@ grunt.initConfig({
 	//------- Watch SASS -> CSS -------//
 	watch: {
 		sass: {
-		  files: 'frontend/styles/**/*.scss',
+		  files: 'styles/styles.scss',
 		  tasks: ['sass']
 		}
 	},
 
 });
 
-	grunt.registerTask('default', ['watch']);
+	grunt.registerTask('default', ['sass', 'cssmin']);
 
 }
