@@ -3,7 +3,6 @@ Represents a client that connects to Twitter to retrieve tweets based on a
 search criteria using Twitter REST API and Tweepy.
 """
 import os
-import json
 import tweepy
 from tweepy import OAuthHandler
 from .TwitterStreamListener import TwitterStreamListener
@@ -35,10 +34,27 @@ class TwitterClient:
         containing it.
         """
         tweets = []
-        results = tweepy.Cursor(self.api.search, q=hashtag).items(n)
-        for tweet in results:
+        # Work out date of latest tweet in DB, and query since that date only
+        since = self.get_latest_tweet_date()
+        if since:
+            results = tweepy.Cursor(self.api.search, q=hashtag, since=since)
+        else:
+            results = tweepy.Cursor(self.api.search, q=hashtag)
+        for tweet in results.items():
             tweets.append(tweet)
         return tweets
+
+    def get_latest_tweet_date(self):
+        """
+        Gets date of latest tweeted tweet.
+        """
+        try:
+            latest_tweet = Tweet.objects.order_by('created_at').reverse()[0]
+            print latest_tweet.created_at
+        except IndexError:
+            return None
+
+        return latest_tweet.created_at
 
 
     def get_images_by_hashtag(self, hashtag, n):
@@ -50,14 +66,16 @@ class TwitterClient:
         tweets = self._get_tweets_by_hashtag(hashtag, n)
         for tweet in tweets:
             user = tweet.author.screen_name.encode('utf-8')
+            created_at = tweet.created_at
             try:
                 image_url = tweet.entities['media'][0]['media_url']
             except KeyError:
                 # Some tweets with given hashtag might not have images in them
                 continue
             try:
-                t = Tweet.objects.create(user=user, image_url=image_url)
+                t = Tweet.objects.create(user=user, image_url=image_url, created_at=created_at)
                 t.save()
+                print t
             except IntegrityError:
                 # We only want images to be in the DB once so that field has
                 # been set to unique. If we try to insert the same image_url
