@@ -34,6 +34,6 @@ Live wall/ photo feed of clothing labels for Fashion Revolution Day for [Fashion
 3. Login: `heroku login`
 4. Add a new remote to push to Heroku: `git remote add heroku-remote git@heroku.com:fashion-revolution-wall.git`
 5. You may need to add ssh keys `heroku keys:add` if this is a machine that has not had heroku setup before
-6. When you have changed ready to push, your working directory must be clean then do `git push heroku master`
+6. When you have changed ready to push, your working directory must be clean then do `git push heroku-remote master`
 7. See the pushed changes: `heroku open`
 8. If any issues, view the logs: `heroku logs`
