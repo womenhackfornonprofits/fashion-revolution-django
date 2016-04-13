@@ -5,12 +5,12 @@ Live wall/ photo feed of clothing labels for Fashion Revolution Day for [Fashion
 
 ##Team
 ###Backend
-* Raquel
-* Mariza
+* [Raquel](https://github.com/raquel-ucl)
+* [Mariza](https://github.com/marizoldi)
 
 ###Front-End
-* Lili
-* Karen
+* [Lili](https://github.com/lili2311)
+* [Karen](https://github.com/neraks)
 
 ##Project Setup
 1. Get the code: `git clone https://github.com/womenhackfornonprofits/fashion-revolution-django`
