@@ -10,4 +10,4 @@ class Command(BaseCommand):
         # A command must define handle()
         def handle(self, *args, **options):
             client = TwitterClient()
-            client.get_images_by_hashtag("#helloworld", 200)
+            client.get_images_by_hashtag("#hellofashionrevwall", 200)
