@@ -5,7 +5,7 @@ search criteria using Twitter REST API and Tweepy.
 import os
 import tweepy
 from tweepy import OAuthHandler
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from .TwitterStreamListener import TwitterStreamListener
 from fashrevwall.wall.models import Tweet
 from django.db import IntegrityError
@@ -39,11 +39,15 @@ class TwitterClient:
         since = self.get_latest_tweet_date()
         print "since: " + str(since)
         if since:
-            results = tweepy.Cursor(self.api.search, q=hashtag, since=since)
+            previous_query = date.today() - timedelta(1)
+            print previous_query
+            results = tweepy.Cursor(self.api.search, q=hashtag, since=previous_query)
         else:
             yesterday = date.today() - timedelta(1)
+            print yesterday
             results = tweepy.Cursor(self.api.search, q=hashtag, since=yesterday)
         print "Obtained results, processing..."
+        print results.items()
         for tweet in results.items():
             print tweet.author.screen_name.encode('utf-8'), tweet.created_at, tweet.text.encode('utf-8')
             user = tweet.author.screen_name.encode('utf-8')
@@ -71,7 +75,6 @@ class TwitterClient:
         """
         try:
             latest_tweet = Tweet.objects.order_by('created_at').reverse()[0]
-            print latest_tweet.created_at
         except IndexError:
             return None
 
