@@ -36,11 +36,14 @@ class TwitterClient:
         tweets = []
         # Work out date of latest tweet in DB, and query since that date only
         since = self.get_latest_tweet_date()
+        print "since: " + str(since)
         if since:
             results = tweepy.Cursor(self.api.search, q=hashtag, since=since)
         else:
             results = tweepy.Cursor(self.api.search, q=hashtag)
+        print "Obtained results, processing..."
         for tweet in results.items():
+            print tweet.author.screen_name.encode('utf-8'), tweet.created_at, tweet.text.encode('utf-8')
             tweets.append(tweet)
         return tweets
 
@@ -64,18 +67,21 @@ class TwitterClient:
         """
         images = []
         tweets = self._get_tweets_by_hashtag(hashtag, n)
+        print "Ingesting " + str(len(tweets)) + " tweets..."
         for tweet in tweets:
             user = tweet.author.screen_name.encode('utf-8')
             created_at = tweet.created_at
             try:
                 image_url = tweet.entities['media'][0]['media_url']
+                print "This tweet contains an image URL: " + image_url
             except KeyError:
                 # Some tweets with given hashtag might not have images in them
+                print "This tweet doesn't contain an image."
                 continue
             try:
                 t = Tweet.objects.create(user=user, image_url=image_url, created_at=created_at)
                 t.save()
-                print t
+                print "Tweet ingested.\n\n"
             except IntegrityError:
                 # We only want images to be in the DB once so that field has
                 # been set to unique. If we try to insert the same image_url

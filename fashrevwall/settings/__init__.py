@@ -3,6 +3,7 @@ import os
 #BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 # Application definition
+HTML_MINIFY = True
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -22,6 +23,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'htmlmin.middleware.HtmlMinifyMiddleware',
+    'htmlmin.middleware.MarkRequestMiddleware',
 )
 
 ROOT_URLCONF = 'fashrevwall.urls'
