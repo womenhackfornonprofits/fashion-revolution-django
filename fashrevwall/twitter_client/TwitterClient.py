@@ -10,6 +10,7 @@ from datetime import date, datetime, timedelta
 from .TwitterStreamListener import TwitterStreamListener
 from fashrevwall.wall.models import Tweet
 from django.db import IntegrityError
+from django.db import connection
 
 class TwitterClient:
     def __init__(self):
@@ -73,7 +74,7 @@ class TwitterClient:
                 if db_size == 8:
                     cur.execute('DELETE FROM wall_tweet WHERE ID = 7;') #delete last tweet --but IDs are not in order
                     #Refresh index number 
-                    cur.execute('VACUUM wall_tweet')
+                
                 
                 conn.commit()
                 conn.close()
