@@ -4,7 +4,6 @@ search criteria using Twitter REST API and Tweepy.
 """
 import os
 import tweepy
-import psycopg2
 from tweepy import OAuthHandler
 from datetime import date, datetime, timedelta
 from .TwitterStreamListener import TwitterStreamListener
@@ -37,19 +36,11 @@ class TwitterClient:
         containing it.
         """
         tweets = []
-        # Work out date of latest tweet in DB, and query since that date only
-        since = self.get_latest_tweet_date()
-        print "since: " + str(since)
-        if since:
-            previous_query = date.today() - timedelta(1)
-            print previous_query
-            results = tweepy.Cursor(self.api.search, q=hashtag, since=previous_query)
-        else:
-            yesterday = date.today() - timedelta(1)
-            print yesterday
-            results = tweepy.Cursor(self.api.search, q=hashtag, since=yesterday)
+        # Tweepy only allows for queries with day, but no time, so we can only
+        # query since yesteday
+        yesterday = date.today() - timedelta(1)
+        results = tweepy.Cursor(self.api.search, q=hashtag, since=yesterday)
         print "Obtained results, processing..."
-        print results.items()
         for tweet in results.items():
             print tweet.author.screen_name.encode('utf-8'), tweet.created_at, tweet.text.encode('utf-8')
             user = tweet.author.screen_name.encode('utf-8')
@@ -70,27 +61,7 @@ class TwitterClient:
                 print "Deleting tweet created on " + str(oldest_tweet.created_at)
                 oldest_tweet.delete()
             try:
-                #in the future, for speeding up the process if number of tweets is extremely high: http://stackoverflow.com/questions/7943233/fast-way-to-discover-the-row-count-of-a-table
-                conn = psycopg2.connect(database = "fashrevwall", host="127.0.0.1", port="5432") #opens a conection to the DB
-                print "Opened database succesfully"
-                cur = conn.cursor() #creates a cursor which will be used to work on the database programming with Python
-                cur.execute('SELECT count(*) FROM wall_tweet')
-                row = cur.fetchone()
-                db_size = row[0]
-                print "Number of tweets in DB: %d \n" % db_size 
-
-                if db_size == 8:
-                    cur.execute('DELETE FROM wall_tweet WHERE ID = 7;') #delete last tweet --but IDs are not in order
-                    #Refresh index number 
-                
-                
-                conn.commit()
-                conn.close()
-                
-
                 t = Tweet.objects.create(user=user, image_url=image_url, created_at=created_at)
-
-
                 t.save()
                 print "New tweet created on date " + str(t.created_at) + " ingested.\n\n"
             except IntegrityError:
