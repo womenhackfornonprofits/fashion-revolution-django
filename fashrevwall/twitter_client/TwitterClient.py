@@ -6,10 +6,9 @@ import os
 import tweepy
 from tweepy import OAuthHandler
 from datetime import date, datetime, timedelta
-from .TwitterStreamListener import TwitterStreamListener
 from fashrevwall.wall.models import Tweet
 from django.db import IntegrityError
-from django.db import connection
+
 
 class TwitterClient:
     def __init__(self):
@@ -30,9 +29,9 @@ class TwitterClient:
         return tweepy.API(self.auth)
 
 
-    def get_images_by_hashtag(self, hashtag, n):
+    def get_images_by_hashtag(self, hashtag):
         """
-        Receives a string hashtag and returns the list of last n Tweets
+        Receives a string hashtag and returns the list of last 24h Tweets
         containing it.
         """
         tweets = []
@@ -41,7 +40,10 @@ class TwitterClient:
         yesterday = date.today() - timedelta(1)
         results = tweepy.Cursor(self.api.search, q=hashtag, since=yesterday)
         print "Obtained results, processing..."
-        for tweet in results.items():
+        for result in results.items():
+            tweets.append(result)
+        tweets = sorted(tweets,  key=lambda tweet: tweet.created_at)
+        for tweet in tweets:
             print tweet.author.screen_name.encode('utf-8'), tweet.created_at, tweet.text.encode('utf-8')
             user = tweet.author.screen_name.encode('utf-8')
             created_at = tweet.created_at
@@ -55,7 +57,7 @@ class TwitterClient:
             print "Checking how many tweets are in the DB..."
             num_tweets = len(Tweet.objects.all())
             print "There are " + str(num_tweets)
-            if num_tweets == 10000:
+            if num_tweets == 20:
                 print "Maximum number of tweets stored in the DB reached."
                 oldest_tweet = Tweet.objects.order_by('created_at')[0]
                 print "Deleting tweet created on " + str(oldest_tweet.created_at)
@@ -69,20 +71,3 @@ class TwitterClient:
                 # been set to unique. If we try to insert the same image_url
                 # twice, the code breaks with an IntegrityError, so skip those
                 continue
-
-
-    def get_latest_tweet_date(self):
-        """
-        Gets date of latest tweeted tweet.
-        """
-        try:
-            latest_tweet = Tweet.objects.order_by('created_at').reverse()[0]
-        except IndexError:
-            return None
-
-        return latest_tweet.created_at
-
-
-    def stream_by_hashtag(self, hashtag):
-        streamingAPI = tweepy.streaming.Stream(self.auth, TwitterStreamListener())
-        streamingAPI.filter(track=[hashtag])
