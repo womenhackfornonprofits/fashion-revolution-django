@@ -59,10 +59,18 @@ class TwitterClient:
                 # Some tweets with given hashtag might not have images in them
                 print "This tweet doesn't contain an image."
                 continue
+            print "Checking how many tweets are in the DB..."
+            num_tweets = len(Tweet.objects.all())
+            print "There are " + str(num_tweets)
+            if num_tweets == 10000:
+                print "Maximum number of tweets stored in the DB reached."
+                oldest_tweet = Tweet.objects.order_by('created_at')[0]
+                print "Deleting tweet created on " + str(oldest_tweet.created_at)
+                oldest_tweet.delete()
             try:
                 t = Tweet.objects.create(user=user, image_url=image_url, created_at=created_at)
                 t.save()
-                print "Tweet ingested.\n\n"
+                print "New tweet created on date " + str(t.created_at) + " ingested.\n\n"
             except IntegrityError:
                 # We only want images to be in the DB once so that field has
                 # been set to unique. If we try to insert the same image_url
