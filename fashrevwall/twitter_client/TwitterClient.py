@@ -4,11 +4,13 @@ search criteria using Twitter REST API and Tweepy.
 """
 import os
 import tweepy
+import psycopg2
 from tweepy import OAuthHandler
 from datetime import date, datetime, timedelta
 from .TwitterStreamListener import TwitterStreamListener
 from fashrevwall.wall.models import Tweet
 from django.db import IntegrityError
+from django.db import connection
 
 class TwitterClient:
     def __init__(self):
@@ -68,7 +70,27 @@ class TwitterClient:
                 print "Deleting tweet created on " + str(oldest_tweet.created_at)
                 oldest_tweet.delete()
             try:
+                #in the future, for speeding up the process if number of tweets is extremely high: http://stackoverflow.com/questions/7943233/fast-way-to-discover-the-row-count-of-a-table
+                conn = psycopg2.connect(database = "fashrevwall", host="127.0.0.1", port="5432") #opens a conection to the DB
+                print "Opened database succesfully"
+                cur = conn.cursor() #creates a cursor which will be used to work on the database programming with Python
+                cur.execute('SELECT count(*) FROM wall_tweet')
+                row = cur.fetchone()
+                db_size = row[0]
+                print "Number of tweets in DB: %d \n" % db_size 
+
+                if db_size == 8:
+                    cur.execute('DELETE FROM wall_tweet WHERE ID = 7;') #delete last tweet --but IDs are not in order
+                    #Refresh index number 
+                
+                
+                conn.commit()
+                conn.close()
+                
+
                 t = Tweet.objects.create(user=user, image_url=image_url, created_at=created_at)
+
+
                 t.save()
                 print "New tweet created on date " + str(t.created_at) + " ingested.\n\n"
             except IntegrityError:
@@ -76,6 +98,7 @@ class TwitterClient:
                 # been set to unique. If we try to insert the same image_url
                 # twice, the code breaks with an IntegrityError, so skip those
                 continue
+
 
     def get_latest_tweet_date(self):
         """
