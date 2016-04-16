@@ -27,7 +27,7 @@
               {% for tweet in object_list %}
                 <li>
                   <div class="tweet-container">
-                    <div class="twitter-image" data-layzr="{{ tweet.image_url }}" data-layzr-bg></div>
+                    <div class="twitter-image js-lazyload" data-image="url({{ tweet.image_url }})" js-lazyload></div>
                     <!--div class="twitter-image" style="background-image: url({{ tweet.image_url }})"></div--> 
                     <span class="tweet-text">&#64;{{ tweet.user }}</span>
                   </div>
