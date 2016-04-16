@@ -2,6 +2,10 @@
 Represents a client that connects to Twitter to retrieve tweets based on a
 search criteria using Twitter REST API and Tweepy.
 """
+
+import logging
+log = logging.getLogger("fashrevwall")
+
 import os
 import tweepy
 from tweepy import OAuthHandler
@@ -39,34 +43,31 @@ class TwitterClient:
         # query since yesteday
         yesterday = date.today() - timedelta(1)
         results = tweepy.Cursor(self.api.search, q=hashtag, since=yesterday)
-        print "Obtained results, processing..."
-        for result in results.items():
-            tweets.append(result)
-        tweets = sorted(tweets,  key=lambda tweet: tweet.created_at)
-        for tweet in tweets:
-            print tweet.author.screen_name.encode('utf-8'), tweet.created_at, tweet.text.encode('utf-8')
+        log.info("Obtained results, processing...")
+        for tweet in results.items():
             user = tweet.author.screen_name.encode('utf-8')
             created_at = tweet.created_at
             try:
                 image_url = tweet.entities['media'][0]['media_url']
-                print "This tweet contains an image URL: " + image_url
+                log.info("This tweet contains an image URL: " + image_url)
             except KeyError:
                 # Some tweets with given hashtag might not have images in them
-                print "This tweet doesn't contain an image."
+                log.info("This tweet doesn't contain an image.")
                 continue
-            print "Checking how many tweets are in the DB..."
             num_tweets = Tweet.objects.count()
-            print "There are " + str(num_tweets)
-            if num_tweets == 20:
-                print "Maximum number of tweets stored in the DB reached."
+            log.info("There are " + str(num_tweets) + " tweets in the DB.")
+            if num_tweets >= 10000:
+                log.info("Maximum number of tweets stored in the DB reached.")
                 oldest_tweet = Tweet.objects.order_by('created_at')[0]
-                print "Deleting tweet created on " + str(oldest_tweet.created_at)
+                log.info("Deleting tweet created on " + str(oldest_tweet.created_at))
                 oldest_tweet.delete()
             try:
+                log.info("Trying to store tweet with text: " + tweet.text + " , and image: " + image_url + " , created at: " + str(tweet.created_at))
                 t = Tweet.objects.create(user=user, image_url=image_url, created_at=created_at)
                 t.save()
-                print "New tweet created on date " + str(t.created_at) + " ingested.\n\n"
+                log.info("New tweet created on date " + str(t.created_at) + " ingested.\n\n")
             except IntegrityError:
+                log.info("Skipping tweet ingestion because image url is already in DB.")
                 # We only want images to be in the DB once so that field has
                 # been set to unique. If we try to insert the same image_url
                 # twice, the code breaks with an IntegrityError, so skip those
