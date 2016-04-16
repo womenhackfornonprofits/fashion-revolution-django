@@ -2,7 +2,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-contrib-uglify');
 
 
 grunt.initConfig({
@@ -30,16 +29,9 @@ grunt.initConfig({
 		  tasks: ['sass']
 		}
 	},
-	uglify: {
-	    my_target: {
-	      files: {
-	        '../fashrevwall/static/scripts/fashrevwall.min.js': ['scripts/lazyload.js']
-	      }
-	    }
-  	}
 
 });
 
-	grunt.registerTask('default', ['sass', 'cssmin', 'uglify']);
+	grunt.registerTask('default', ['sass', 'cssmin']);
 
 }
