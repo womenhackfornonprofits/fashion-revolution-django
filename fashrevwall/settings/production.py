@@ -13,7 +13,6 @@ SECRET_KEY = os.environ["SECRET_KEY"]
 
 ALLOWED_HOSTS = ['fashion-revolution-wall.herokuapp.com']
 
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -43,6 +42,10 @@ LOGGING = {
         'django.request': {
             'handlers': ['console'],
             'level': 'ERROR',
+        },
+        'fashrevwall': {
+            'handlers': ['console'],
+            'level': 'INFO',
         }
     }
 }
