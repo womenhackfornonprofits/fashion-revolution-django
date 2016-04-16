@@ -44,10 +44,7 @@ class TwitterClient:
         yesterday = date.today() - timedelta(1)
         results = tweepy.Cursor(self.api.search, q=hashtag, since=yesterday)
         log.info("Obtained results, processing...")
-        for result in results.items():
-            tweets.append(result)
-        tweets = sorted(tweets,  key=lambda tweet: tweet.created_at)
-        for tweet in tweets:
+        for tweet in results.items():
             user = tweet.author.screen_name.encode('utf-8')
             created_at = tweet.created_at
             try:
