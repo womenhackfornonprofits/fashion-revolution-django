@@ -57,7 +57,7 @@ USE_I18N = False
 
 USE_L10N = False
 
-USE_TZ = True  # Stores dates with timezone
+USE_TZ = False  # Timezone support not needed
 
 
 # Static files (CSS, JavaScript, Images)
