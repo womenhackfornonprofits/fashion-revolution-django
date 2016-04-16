@@ -60,7 +60,7 @@ class TwitterClient:
             log.info("Checking how many tweets are in the DB...")
             num_tweets = Tweet.objects.count()
             log.info("There are " + str(num_tweets))
-            if num_tweets == 20:
+            if num_tweets >= 10000:
                 log.info("Maximum number of tweets stored in the DB reached.")
                 oldest_tweet = Tweet.objects.order_by('created_at')[0]
                 log.info("Deleting tweet created on " + str(oldest_tweet.created_at))
