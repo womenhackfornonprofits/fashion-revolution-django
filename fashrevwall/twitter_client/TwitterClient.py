@@ -5,7 +5,7 @@ search criteria using Twitter REST API and Tweepy.
 import os
 import tweepy
 from tweepy import OAuthHandler
-from datetime import date, datetime, timedelta
+from datetime import date, timedelta
 from fashrevwall.wall.models import Tweet
 from django.db import IntegrityError
 
@@ -55,7 +55,7 @@ class TwitterClient:
                 print "This tweet doesn't contain an image."
                 continue
             print "Checking how many tweets are in the DB..."
-            num_tweets = len(Tweet.objects.all())
+            num_tweets = Tweet.objects.count()
             print "There are " + str(num_tweets)
             if num_tweets == 20:
                 print "Maximum number of tweets stored in the DB reached."
