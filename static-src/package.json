@@ -20,8 +20,7 @@
     "grunt-contrib-sass": "~1.0.0",
     "grunt-contrib-watch": "~1.0.0",
     "grunt-contrib-cssmin": "~1.0.1",
-    "bootstrap-sass": "~3.3.6",
-    "grunt-contrib-uglify": "~1.0.1"
+    "bootstrap-sass": "~3.3.6"
   },
   "homepage": "https://github.com/womenhackfornonprofits/fashion-revolution-django#readme",
   "dependencies": {
