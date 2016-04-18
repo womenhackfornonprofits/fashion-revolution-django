@@ -15,7 +15,7 @@ class TweetListView(ListView):
     	"""Returns latest n tweets in multiples of 3"""
     	tweet_count = Tweet.objects.count()
     	limit = tweet_count - tweet_count % 3
-    	return Tweet.objects.order_by('-created_at')[:limit]
+    	return Tweet.objects.order_by('id')[:limit]
 
     def get_context_data(self, **kwargs):
         context = super(TweetListView, self).get_context_data(**kwargs)
