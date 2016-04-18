@@ -45,6 +45,11 @@ class TwitterClient:
         results = tweepy.Cursor(self.api.search, q=hashtag, since=yesterday)
         log.info("Obtained results, processing...")
         for tweet in results.items():
+            tweet_url = "http://twitter.com/" + tweet.author.screen_name + "/status/" + tweet.id_str
+            log.info("Looking into tweet: " + tweet_url)
+            if hasattr(tweet, "retweeted_status") or tweet.in_reply_to_status_id:
+                log.info("This tweet is a retweet or a reply, so skipping...\n")
+                continue
             user = tweet.author.screen_name.encode('utf-8')
             created_at = tweet.created_at
             try:
@@ -52,7 +57,7 @@ class TwitterClient:
                 log.info("This tweet contains an image URL: " + image_url)
             except KeyError:
                 # Some tweets with given hashtag might not have images in them
-                log.info("This tweet doesn't contain an image.")
+                log.info("This tweet doesn't contain an image.\n")
                 continue
             num_tweets = Tweet.objects.count()
             log.info("There are " + str(num_tweets) + " tweets in the DB.")
@@ -67,7 +72,7 @@ class TwitterClient:
                 t.save()
                 log.info("New tweet created on date " + str(t.created_at) + " ingested.\n\n")
             except IntegrityError:
-                log.info("Skipping tweet ingestion because image url is already in DB.")
+                log.info("Skipping tweet ingestion because image url is already in DB.\n")
                 # We only want images to be in the DB once so that field has
                 # been set to unique. If we try to insert the same image_url
                 # twice, the code breaks with an IntegrityError, so skip those
