@@ -6,7 +6,7 @@ $font-size-base: 16px;
 $font-size-text: 1.2em;
 
 @font-face {
- font-family: "Kelson Sans";
+    font-family: "Kelson Sans";
     src: url("kelson-font/Kelson_Sans_Regular.otf") format("opentype");
 }
 @font-face {
@@ -91,7 +91,7 @@ a {
     line-height:1.3em;
     text-align: center;
     padding: 1em;
-    font-style: bold;
+    font-weight: bold;
     padding:0.5em 0;
     border: .7em solid #fcfcfc;  
     display:block;
@@ -100,7 +100,7 @@ a {
     text-transform:uppercase;
     margin: 0 0 1em 0;
     color:#181818;
-    font-family:"Open Sans", "Ariel";
+    font-family: "Kelson Sans";
 }
 
 #top-bar {
@@ -137,8 +137,7 @@ a {
     position: relative;
     padding-bottom: 56.25%; /* 16:9 */
     padding-top: 25px;
-    height: 0;
-   
+    height: 0; 
 }
 
 .video-wrapper iframe {

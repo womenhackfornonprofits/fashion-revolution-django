@@ -920,7 +920,7 @@ a {
   line-height: 1.3em;
   text-align: center;
   padding: 1em;
-  font-style: bold;
+  font-weight: bold;
   padding: 0.5em 0;
   border: .7em solid #fcfcfc;
   display: block;
@@ -929,7 +929,7 @@ a {
   text-transform: uppercase;
   margin: 0 0 1em 0;
   color: #181818;
-  font-family: "Open Sans", "Ariel"; }
+  font-family: "Kelson Sans"; }
 
 #top-bar {
   height: 200px; }
