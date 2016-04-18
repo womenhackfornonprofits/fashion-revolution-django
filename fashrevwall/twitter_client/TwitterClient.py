@@ -45,8 +45,10 @@ class TwitterClient:
         results = tweepy.Cursor(self.api.search, q=hashtag, since=yesterday)
         log.info("Obtained results, processing...")
         for tweet in results.items():
-            if hasattr(tweet, "retweeted_status"):
-                log.info("This tweet is a retweet, skipping...")
+            tweet_url = "http://twitter.com/" + tweet.author.screen_name + "/status/" + tweet.id_str
+            log.info("\nLooking into tweet: " + tweet_url)
+            if hasattr(tweet, "retweeted_status") or tweet.in_reply_to_status_id:
+                log.info("This tweet is a retweet or a reply, so skipping...")
                 continue
             user = tweet.author.screen_name.encode('utf-8')
             created_at = tweet.created_at
